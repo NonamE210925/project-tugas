@@ -21,7 +21,7 @@
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-header">
-                <a href="{{ route('banner.tambah') }}" class="btn btn-warning btn-rounded btn-fw">Tambah Data</a>
+                <a href="{{ route('user.tambah') }}" class="btn btn-warning btn-rounded btn-fw">Tambah Data</a>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -29,39 +29,31 @@
                         <thead>
                             <tr>
                                 <th>NO</th>
-                                <th>kategori</th>
-                                <th>judul</th>
-                                <th>file</th>
-                                <th>url</th>
-                                <th>published</th>
+                                <th>NIK</th>
+                                <th>Alamat</th>
+                                <th>Foto</th>
+                                <th>Nama Jabatan</th>
+                                <th>Email</th>
+                                <th>Password</th>
+                                <th>Role</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                        @foreach($banner as $no => $ban)
+                        @foreach($data as $no => $da)
                             <tr>
                                 <td>{{$no+1}}</td>
+                                <td>{{ $da->nik }}</td>
+                                <td>{{$da->alamat}}</td>
+                                <td><img src="{{ asset ( 'storage/'. $da->foto) }}" alt=""></td>
+                                <td>{{$da->nama_jabatan}}</td>
+                                <td>{{$da->email}}</td>
+                                <td>{{$da->password}}</td>
+                                <td>{{$da->role}}</td>
                                 <td>
-                                    @if($ban->kategori== 'Banner Link')
-                                        Banner Link
-                                    @else
-                                        Banner ILM
-                                    @endif
-                                </td>
-                                <td>{{$ban->judul}}</td>
-                                <td>{{$ban->file}}</td>
-                                <td>{{$ban->url}}</td>
-                                <td>
-                                    @if($ban->published== 'Published')
-                                        Published
-                                    @else
-                                        Unpublished
-                                    @endif
-                                </td>
-                                <td>
-                                    <a href="{{ route('banner.edit', $ban->id) }}"><span
+                                    <a href="{{ route('user.edit', $da->id) }}"><span
                                             class="badge badge-primary my-2">Edit</span></a>
-                                    <form action="{{ route('banner.destroy', $ban->id) }}" method="POST">
+                                    <form action="{{ route('user.destroy', $da->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"

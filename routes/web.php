@@ -42,6 +42,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/{banner:id}/destroy', [App\Http\Controllers\BannerController::class, 'destroy'])->name('banner.destroy');
     });
 
+    Route::prefix('user')->group(function () {
+        Route::get('/', [App\Http\Controllers\UserController::class, 'index'])->name('user');
+        Route::get('/tambah', [App\Http\Controllers\UserController::class, 'add'])->name('user.tambah');
+        Route::post('/store', [App\Http\Controllers\UserController::class, 'store'])->name('user.store');
+        Route::get('/{user:id}/edit', [App\Http\Controllers\UserController::class, 'edit'])->name('user.edit');
+        Route::put('/update/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('user.update');
+        Route::delete('/{user:id}/destroy', [App\Http\Controllers\UserController::class, 'destroy'])->name('user.destroy');
+    });
+
 
     Route::prefix('kelurahan')->group(function () {
         Route::get('', [App\Http\Controllers\KelurahanController::class, 'index'])->name('kelurahan');

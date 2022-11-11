@@ -10,78 +10,90 @@
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('banner.store') }}" method="POST" class="forms-sample" >
+                    <form action="{{ route('user.store') }}" method="POST" class="forms-sample"  enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
-                            <label for="judul">Judul</label>
-                            <input type="text" class="form-control @error('judul') is-invalid @enderror" id="nama_kecamatan"
-                                name="judul" placeholder="judl" value="{{ old('judul') }}">
-                            @error('judul')
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
+                                name="name" placeholder="name" value="{{ old('name') }}">
+                            @error('name')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="slug">Slug</label>
-                            <input type="text" class="form-control @error('slug') is-invalid @enderror" id="nama_kecamatan"
-                                name="slug" placeholder="kecamatan" value="{{ old('slug') }}">
-                            @error('slug')
+                            <label for="nik">NIK</label>
+                            <input type="text" class="form-control @error('nik') is-invalid @enderror" id="nik"
+                                name="nik" placeholder="nik" value="{{ old('nik') }}">
+                            @error('nik')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="file">file</label>
-                            <input type="text" class="form-control @error('file') is-invalid @enderror" id="nama_kecamatan"
-                                name="file" placeholder="kecamatan" value="{{ old('file') }}">
-                            @error('file')
+                            <label for="alamat">Alamat</label>
+                            <input type="text" class="form-control @error('alamat') is-invalid @enderror" id="alamat"
+                                name="alamat" placeholder="alamat" value="{{ old('alamat') }}">
+                            @error('alamat')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="url">Url</label>
-                            <input type="text" class="form-control @error('url') is-invalid @enderror" id="nama_kecamatan"
-                                name="url" placeholder="kecamatan" value="{{ old('url') }}">
-                            @error('url')
+                            <label for="foto">foto </label>
+                            <input type="file" class="form-control @error('foto') is-invalid @enderror" id="foto"
+                                name="foto" placeholder="foto" value="{{ old('foto') }}">
+                            @error('foto')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="kategori">kategori</label>->
-                            <select class="js-example-basic-single w-100" name="kategori">
-                                <option>-- Pilih kategori --</option>
-                                @foreach($data as $ban)
-                                <option value="{{ $ban->id}}">{{ $ban->kategori}}</option>
-                                @endforeach
+                            <label for="nama_jabatan">Nama Jabatan </label>
+                            <input type="text" class="form-control @error('nama_jabatan') is-invalid @enderror" id="nama_jabatan"
+                                name="nama_jabatan" placeholder="nama jabatan" value="{{ old('nama_jabatan') }}">
+                            @error('nama_jabatan')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
+                                name="email" placeholder="email" value="{{ old('email') }}">
+                            @error('email')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="password">password</label>
+                            <input type="password" class="form-control @error('password') is-invalid @enderror" id="password"
+                                name="password" placeholder="password" value="{{ old('password') }}">
+                            @error('password')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="role">Role</label>
+                            <select name="role" id="role" class="form-control">
+                                <option value=""> -Pilih- </option>
+                                <option value="Admin" {{ old('role') == 'Admin' ? 'selected' : '' }}>Admin</option>
+                                <option value="Atasan" {{ old('role') == 'Atasan' ? 'selected' : '' }}>Atasan</option>
+                                <option value="Pegawai" {{ old('role') == 'Pegawai' ? 'selected' : '' }}>Pegawai</option>
                             </select>
-                            @error('kecamatan_id')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
                         </div>
-                        <div class="form-group">
-                            <label for="nama_kecamatan">Nama Kecamatan</label>->
-                            <select class="js-example-basic-single w-100" name="kecamatan_id">
-                                <option>-- Pilih Kecamatan --</option>
-                                @foreach($data as $ban)
-                                <option value="{{ $ban->id}}">{{ $ban->published}}</option>
-                                @endforeach
-                            </select>
-                            @error('kecamatan_id')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                        <button type="submit" class="btn btn-primary me-2">Tambah</button>
-                        <button type="reset" class="btn btn-light">Cancel</button>
+                        <button type="submit" class="btn btn-primary me-2">Simpan</button>
+                        <button type="reset" class="btn btn-light">Reset</button>
+                        <a href="{{ route('user') }}" class="btn btn-success me-2">Kembali</a>
                     </form>
                 </div>
             </div>

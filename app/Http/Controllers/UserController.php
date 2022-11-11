@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\File;
+// use File;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
 
@@ -11,17 +17,15 @@ class UserController extends Controller
     public function index()
     {
         $pageName = "Data Atasan/Pegawai";
-        $user = User::all();
+        $data = User::all();
 
-        return view('pages.user.index', compact('pageName', 'user'));
+        return view('pages.user.index', compact('pageName', 'data'));
     }
 
-    public function add($id)
+    public function add()
     {
         $pageName   = "Form Tambah Data";
-        $data       = User::all();
-
-        return view('pages.banner.tambah', compact('pageName','data'));
+        return view('pages.user.tambah', compact('pageName'));
     }
 
     public function store(Request $request)
@@ -47,8 +51,9 @@ class UserController extends Controller
             'role.required' => 'Harap mengisi data',
         ]);
 
-        if($request->file('foto')){
-            $validated['foto'] = $request->file('foto')->store('uploads/banner');
+        $validated ['password'] = Hash::make($validated['password']);
+        if ($request->file('foto')) {
+            $validated['foto'] = $request->file('foto')->store('uploads/foto');
         }
 
         $store = User::create($validated);
@@ -88,12 +93,28 @@ class UserController extends Controller
         ]);
 
         $data = $request->all();
-        $data['user_id'] = Auth::user()->id;
-        $banner = Banner::findOrFail($id);
+        $foto = User::findOrFail($id);
 
-        $update = $banner->update($data);
+        // jika file/foto ingin dihapus
+        if ($request->hasFile('foto')) {
+            // delete old image
+            if ($foto->filelama) {
+                File::delete('uploads/foto/' . $foto->filelama);
 
-        session()->flash('success', 'Data Berhasil Diupdate!.');
-        return redirect()->route('banner');
+                $update = $foto->update($data);
+
+                session()->flash('success', 'Data Berhasil Diupdate!.');
+                return redirect()->route('user');
+            }
+        }
+    }
+    public function destroy($id)
+    {
+        $user = user::findOrFail($id);
+        $delete = $user->delete();
+
+        session()->flash('error', 'Data Berhasil Dihapus!.');
+        return redirect()->route('user');
+
     }
 }
