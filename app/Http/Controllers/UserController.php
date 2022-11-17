@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\File;
-// use File;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
@@ -64,49 +63,61 @@ class UserController extends Controller
         return redirect()->route('user');
     }
 
+    public function detail($id)
+    {
+        $pageName = "Profil";
+        $data = User::findOrFail($id);
+        return view('pages.user.detail', compact('pageName', 'data'));
+    }
     public function edit($id)
     {
         $pageName = "Form Edit Data";
         $data = User::findOrFail($id);
         return view('pages.user.edit', compact('pageName', 'data'));
     }
-    public function update(Request $request, $id, $slug)
+    public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'name' => 'required',
-            'nik' => 'required',
-            'alamat' => 'required',
-            'foto' => 'required',
-            'nama_jabatan' => 'required',
-            'email' => 'required',
-            'password' => 'required',
-            'role' => 'required',
-        ], [
-            'name.required' => 'Harap mengisi data',
-            'nik.required' => 'Harap mengisi data',
-            'alamat.required' => 'Harap mengisi data',
-            'foto.required' => 'Harap mengisi data',
-            'nama_jabatana.required' => 'Harap mengisi data',
-            'email.required' => 'Harap mengisi data',
-            'password.required' => 'Harap mengisi data',
-            'role.required' => 'Harap mengisi data',
-        ]);
+    $validated = $request->validate([
+        'name' => 'required',
+        'nik' => 'required',
+        'alamat' => 'required',
+        'nama_jabatan' => 'required',
+        'email' => 'required',
+        'role' => 'required',
+    ], [
+        'name.required' => 'Harap mengisi data',
+        'nik.required' => 'Harap mengisi data',
+        'alamat.required' => 'Harap mengisi data',
+        'nama_jabatana.required' => 'Harap mengisi data',
+        'email.required' => 'Harap mengisi data',
+        'role.required' => 'Harap mengisi data',
+    ]);
 
-        $data = $request->all();
-        $foto = User::findOrFail($id);
+    $data = $request->all();
+    $user = User::findOrFail($id);
 
-        // jika file/foto ingin dihapus
-        if ($request->hasFile('foto')) {
-            // delete old image
-            if ($foto->filelama) {
-                File::delete('uploads/foto/' . $foto->filelama);
-
-                $update = $foto->update($data);
-
-                session()->flash('success', 'Data Berhasil Diupdate!.');
-                return redirect()->route('user');
-            }
+    // jika file/foto ingin dihapus
+    if ($request->hasFile('foto')) {
+        // delete old image
+        if ($user->filelama) {
+            // File::delete('storage/' . $user->filelama);
+            Storage::delete($request->filelama);
         }
+        $data['foto'] = $request->file('foto')->store('uploads/foto');
+    } else {
+        $data['foto'] = $user->foto; //ambil data dari sebelum perubahan
+    }
+
+       if(! $request->input('password')){
+        $data ['password'] = $user->password;
+       }
+
+       $data ['password'] = Hash::make($data['password']);
+
+       $update = $user->update($data);
+
+       session()->flash('success', 'Data Berhasil Diupdate!.');
+       return redirect()->route('user');
     }
     public function destroy($id)
     {

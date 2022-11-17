@@ -7,38 +7,42 @@
                 <h3 class="m-3">{{ $pageName }}</h3>
             </div>
         </div>
-        <div class="col-md-6 grid-margin stretch-card">
+        <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('kelurahan.store') }}" method="POST" class="forms-sample">
+                    <form action="{{ route('struktur.store') }}" method="POST" class="forms-sample"  enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
-                            <label for="nama_kelurahan">Nama Kelurahan</label>
-                            <input type="text" class="form-control @error('nama_kelurahan') is-invalid @enderror" id="nama_kelurahan"
-                                name="nama_kelurahan" placeholder="Kelurahan" value="{{ old('nama_kelurahan') }}">
-                            @error('nama_kelurahan')
+                            <label for="atasan_id">Atasan</label>->
+                            <select class="js-example-basic-single w-100" name="atasan_id">
+                                <option>-- Pilih Atasan --</option>
+                                @foreach($atasan as $at)
+                                <option value="{{ $at->id}}">{{ $at->name}}</option>
+                                @endforeach
+                            </select>
+                            @error('atasan')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="nama_kecamatan">Nama Kecamatan</label>->
-                            <select class="js-example-basic-single w-100" name="kecamatan_id">
-                                <option>-- Pilih Kecamatan --</option>
-                                @foreach($kecamatan as $kec)
-                                <option value="{{ $kec->id}}">{{ $kec->nama_kecamatan}}</option>
+                            <label for="pegawai_id">Pegawai</label>->
+                            <select class="js-example-basic-single w-100" name="pegawai_id">
+                                <option>-- Pilih Pegawai --</option>
+                                @foreach($pegawai as $pe)
+                                <option value="{{ $pe->id}}">{{ $pe->name}}</option>
                                 @endforeach
                             </select>
-                            @error('kecamatan_id')
+                            @error('pegawai')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
                             @enderror
                         </div>
-                        
                         <button type="submit" class="btn btn-primary me-2">Simpan</button>
-                        <button type="reset" class="btn btn-light">Cancel</button>
+                        <button type="reset" class="btn btn-light">Reset</button>
+                        <a href="{{ route('struktur') }}" class="btn btn-success me-2">Kembali</a>
                     </form>
                 </div>
             </div>

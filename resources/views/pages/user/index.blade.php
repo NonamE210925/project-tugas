@@ -29,12 +29,13 @@
                         <thead>
                             <tr>
                                 <th>NO</th>
+                                <th>Name</th>
                                 <th>NIK</th>
                                 <th>Alamat</th>
                                 <th>Foto</th>
-                                <th>Nama Jabatan</th>
+                                <th> Jabatan</th>
                                 <th>Email</th>
-                                <th>Password</th>
+                                {{-- <th>Password</th> --}}
                                 <th>Role</th>
                                 <th>Aksi</th>
                             </tr>
@@ -43,14 +44,17 @@
                         @foreach($data as $no => $da)
                             <tr>
                                 <td>{{$no+1}}</td>
+                                <td>{{ $da->name }}</td>
                                 <td>{{ $da->nik }}</td>
                                 <td>{{$da->alamat}}</td>
                                 <td><img src="{{ asset ( 'storage/'. $da->foto) }}" alt=""></td>
                                 <td>{{$da->nama_jabatan}}</td>
                                 <td>{{$da->email}}</td>
-                                <td>{{$da->password}}</td>
+                                {{-- <td>{{$da->password}}</td> --}}
                                 <td>{{$da->role}}</td>
                                 <td>
+                                    <a href="{{ route('user.detail', $da->id) }}"><span
+                                        class="badge badge-primary my-2">Detail</span></a>
                                     <a href="{{ route('user.edit', $da->id) }}"><span
                                             class="badge badge-primary my-2">Edit</span></a>
                                     <form action="{{ route('user.destroy', $da->id) }}" method="POST">

@@ -21,7 +21,7 @@
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-header">
-                <a href="{{ route('banner.tambah') }}" class="btn btn-warning btn-rounded btn-fw">Tambah Data</a>
+                <a href="{{ route('struktur.tambah') }}" class="btn btn-warning btn-rounded btn-fw">Tambah Data</a>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -29,39 +29,21 @@
                         <thead>
                             <tr>
                                 <th>NO</th>
-                                <th>kategori</th>
-                                <th>judul</th>
-                                <th>file</th>
-                                <th>url</th>
-                                <th>published</th>
+                                <th>Atasan</th>
+                                <th>Pegawai</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                        @foreach($banner as $no => $ban)
+                        @foreach($struktur as $no => $st)
                             <tr>
                                 <td>{{$no+1}}</td>
+                                <td>{{$st->atasan->name}}</td>
+                                <td>{{$st->pegawai->name}}</td>
                                 <td>
-                                    @if($ban->kategori== 'Banner Link')
-                                        Banner Link
-                                    @else
-                                        Banner ILM
-                                    @endif
-                                </td>
-                                <td>{{$ban->judul}}</td>
-                                <td>{{$ban->file}}</td>
-                                <td>{{$ban->url}}</td>
-                                <td>
-                                    @if($ban->published== 'Published')
-                                        Published
-                                    @else
-                                        Unpublished
-                                    @endif
-                                </td>
-                                <td>
-                                    <a href="{{ route('banner.edit', $ban->id) }}"><span
+                                    <a href="{{ route('struktur.edit', $st->id) }}"><span
                                             class="badge badge-primary my-2">Edit</span></a>
-                                    <form action="{{ route('banner.destroy', $ban->id) }}" method="POST">
+                                    <form action="{{ route('struktur.destroy', $st->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"
