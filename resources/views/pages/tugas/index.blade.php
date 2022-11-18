@@ -20,23 +20,26 @@
 
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
+
+            @if (auth()->user()->role == "Atasan")
             <div class="card-header">
                 <a href="{{ route('tugas.tambah') }}" class="btn btn-warning btn-rounded btn-fw">Tambah Data</a>
             </div>
+            @endif
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-striped" id="table_id">
                         <thead>
                             <tr>
                                 <th>NO</th>
-                                <th>Atasan</th>
+                                {{-- <th>Atasan</th> --}}
                                 <th>Pegawai</th>
                                 <th>Judul</th>
                                 <th>Isi</th>
                                 <th>File</th>
                                 <th>Status</th>
-                                <th>Tanggal Pembuatan Tugas</th>
-                                <th>Tanggal Selesai Tugas</th>
+                                <th>Tanggal Pembuatan </th>
+                                <th>Tanggal Selesai </th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -44,7 +47,7 @@
                         @foreach($tugas as $no => $tu)
                             <tr>
                                 <td>{{$no+1}}</td>
-                                <td>{{$tu->atasan->name}}</td>
+                                {{-- <td>{{$tu->atasan->name}}</td> --}}
                                 <td>{{$tu->pegawai->name}}</td>
                                 <td>{{$tu->judul }}</td>
                                 <td>{{$tu->isi }}</td>
@@ -53,8 +56,12 @@
                                 <td>{{Carbon\Carbon::parse($tu->tpt)->isoFormat('D MMMM Y') }} </td>
                                 <td>{{ Carbon\Carbon::parse($tu->tst)->isoFormat('D MMMM Y') }}</td>
                                 <td>
+                                    @if (auth()->user()->role == 'Atasan')
+                                    <a href="{{ route('tugas.edit', $tu->id) }}"><span
+                                        class="badge badge-primary my-2">Detail</span></a>
                                     <a href="{{ route('tugas.edit', $tu->id) }}"><span
                                             class="badge badge-primary my-2">Edit</span></a>
+                                    @endif
                                     <form action="{{ route('tugas.destroy', $tu->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')

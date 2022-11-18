@@ -53,8 +53,6 @@
                                 {{-- <td>{{$da->password}}</td> --}}
                                 <td>{{$da->role}}</td>
                                 <td>
-                                    <a href="{{ route('user.detail', $da->id) }}"><span
-                                        class="badge badge-primary my-2">Detail</span></a>
                                     <a href="{{ route('user.edit', $da->id) }}"><span
                                             class="badge badge-primary my-2">Edit</span></a>
                                     <form action="{{ route('user.destroy', $da->id) }}" method="POST">

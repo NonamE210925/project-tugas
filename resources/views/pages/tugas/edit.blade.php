@@ -18,7 +18,7 @@
                             <select class="js-example-basic-single w-100" name="pegawai_id">
                                 <option>-- Pilih Pegawai --</option>
                                 @foreach($pegawai as $pe)
-                                <option  value="{{ $pe->id}}" {{ $pe->id == $data->pegawai_id ? 'selected' : ''}}>{{ $pe->name}}</option>
+                                <option  value="{{ $pe->pegawai->id}}" {{ $pe->pegawai->id == $data->pegawai_id ? 'selected' : ''}}>{{ $pe->pegawai->name}}</option>
                                 @endforeach
                             </select>
                             @error('pegawai')
@@ -51,7 +51,7 @@
                             <label for="file">File</label>
                             <input type="hidden" name="filelama" value="{{ old('file') ?? $data->file}}">
                             <input type="file" class="form-control @error('file') is-invalid @enderror" id="file"
-                                name="file" placeholder="judul" value="{{ old('file') ?? $data->d }}">
+                                name="file" value="{{ old('file') ?? $data->d }}">
                             @error('file')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -69,9 +69,9 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="tpt">Tanggal Pembuatan Tugas</label>
+                            <label for="tpt">Tanggal Pembuatan</label>
                             <input type="date" class="form-control @error('tpt') is-invalid @enderror" id="tpt"
-                                name="tpt" placeholder="" value="{{ old('tpt') ?? $data->tpt }}">
+                                name="tpt" value="{{ old('tpt') ?? $data->tpt }}">
                             @error('tpt')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -79,9 +79,9 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="tst">Tanggal Selesai Tugas</label>
+                            <label for="tst">Tanggal Selesai</label>
                             <input type="date" class="form-control @error('tst') is-invalid @enderror" id="tst"
-                                name="tst" placeholder="judul" value="{{ old('tst') ?? $data->tst }}">
+                                name="tst" value="{{ old('tst') ?? $data->tst }}">
                             @error('tst')
                                 <div class="invalid-feedback">
                                     {{ $message }}

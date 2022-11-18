@@ -32,7 +32,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/{struktur:id}/destroy', [App\Http\Controllers\StrukturController::class, 'destroy'])->name('struktur.destroy');
     });
 
-    // Route::middleware(['admin'])->group(function () {
     Route::prefix('user')->group(function () {
         Route::get('/', [App\Http\Controllers\UserController::class, 'index'])->name('user');
         Route::get('/tambah', [App\Http\Controllers\UserController::class, 'add'])->name('user.tambah');
@@ -42,9 +41,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('/update/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('user.update');
         Route::delete('/{user:id}/destroy', [App\Http\Controllers\UserController::class, 'destroy'])->name('user.destroy');
     });
-// });
+
     Route::prefix('tugas')->group(function () {
         Route::get('/', [App\Http\Controllers\TugasController::class, 'index'])->name('tugas');
+        Route::get('/{status:Draft}', [App\Http\Controllers\TugasController::class, 'status'])->name('tugas.status');
+        // Route::get('/status{draft}', [App\Http\Controllers\TugasController::class, 'status'])->name('tugas.status');
+        // Route::get('/status{draft}', [App\Http\Controllers\TugasController::class, 'status'])->name('tugas.status');
+        // Route::get('/status{draft}', [App\Http\Controllers\TugasController::class, 'status'])->name('tugas.status');
         Route::get('/tambah', [App\Http\Controllers\TugasController::class, 'add'])->name('tugas.tambah');
         Route::post('/store', [App\Http\Controllers\TugasController::class, 'store'])->name('tugas.store');
         Route::get('/{tugas:id}/edit', [App\Http\Controllers\TugasController::class, 'edit'])->name('tugas.edit');

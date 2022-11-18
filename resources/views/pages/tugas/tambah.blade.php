@@ -38,18 +38,19 @@
                         </div>
                         <div class="form-group">
                             <label for="isi">Isi</label>
-                            <input type="text" class="form-control @error('isi') is-invalid @enderror" id="isi"
-                                name="isi" placeholder="isi" value="{{ old('isi') }}">
+							<textarea class="form-control @error('isi') is-invalid @enderror" id="exampleTextarea1" rows="4"
+                                        name="isi">{{ old('isi') }}</textarea>
                             @error('isi')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
                             @enderror
-                        </div>
+						</div>
+
                         <div class="form-group">
                             <label for="file">file</label>
                             <input type="file" class="form-control @error('file') is-invalid @enderror" id="file"
-                                name="file" placeholder="judul" value="{{ old('file') }}">
+                                name="file"  value="{{ old('file') }}">
                             @error('file')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -69,7 +70,7 @@
                         <div class="form-group">
                             <label for="tpt">Tanggal Pembuatan Tugas</label>
                             <input type="date" class="form-control @error('tpt') is-invalid @enderror" id="tpt"
-                                name="tpt" placeholder="judul" value="{{ old('tpt') }}">
+                                name="tpt"  value="{{ old('tpt') }}">
                             @error('tpt')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -79,7 +80,7 @@
                         <div class="form-group">
                             <label for="tst">Tanggal Selesai Tugas</label>
                             <input type="date" class="form-control @error('tst') is-invalid @enderror" id="tst"
-                                name="tst" placeholder="judul" value="{{ old('tst') }}">
+                                name="tst"  value="{{ old('tst') }}">
                             @error('tst')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -121,5 +122,8 @@
                 }
             });
         });
+    </script>
+     <script type="text/javascript">
+		CKEDITOR.replace('isi');
     </script>
 @endpush

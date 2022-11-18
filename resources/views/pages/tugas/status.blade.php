@@ -20,43 +20,28 @@
 
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
-            @can('isAdmin')
-            <div class="card-header">
-                <a href="{{ route('struktur.tambah') }}" class="btn btn-warning btn-rounded btn-fw">Tambah Data</a>
-            </div>
-            @endcan
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-striped" id="table_id">
                         <thead>
                             <tr>
                                 <th>NO</th>
-                                <th>Atasan</th>
                                 <th>Pegawai</th>
-                                @can('isAdmin')
-                                <th>Aksi</th>
-                                @endcan
+                                <th>Judul</th>
+                                <th>Status</th>
+                                <th>Tanggal Pembuatan</th>
+                                <th>Tanggal Selesai</th>
                             </tr>
                         </thead>
                         <tbody>
-                        @foreach($struktur as $no => $st)
+                        @foreach($status as $no => $st)
                             <tr>
                                 <td>{{$no+1}}</td>
-                                <td>{{$st->atasan->name}}</td>
                                 <td>{{$st->pegawai->name}}</td>
-                                @can('isAdmin')
-                                <td>
-                                    <a href="{{ route('struktur.edit', $st->id) }}"><span
-                                            class="badge badge-primary my-2">Edit</span></a>
-                                    <form action="{{ route('struktur.destroy', $st->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                            onclick="return confirm('Anda yakin ingin menghapus data ?')" class="badge
-                                            badge-danger">Hapus</button>
-                                    </form>
-                                </td>
-                                @endcan
+                                <td>{{$st->judul}}</td>
+                                <td>{{$st->status }}</td>
+                                <td>{{$st->tpt }}</td>
+                                <td>{{$st->tst  }}</td>
                             </tr>
                         @endforeach
                         </tbody>

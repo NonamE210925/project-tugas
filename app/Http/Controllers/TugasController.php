@@ -16,8 +16,56 @@ class TugasController extends Controller
         $pageName   = "Tugas";
         Carbon::setLocale('id');
         $tugas  = Tugas::all();
+        // $draft = Tugas::where('status','=','Draft');
+        // $diterima = Tugas::where('status','=','Diterima');
+        // $dalampengerjaan = Tugas::where('status','=','Dalam Pengerjaan');
+        // $selesai = Tugas::where('status','=','Selesai');
 
         return view('pages.tugas.index', compact('pageName', 'tugas'));
+    }
+
+    // public function status()
+    // {
+    //     $pageName   = "Status";
+    //     Carbon::setLocale('id');
+    //     $draft = Tugas::where('status','=','Draft');
+    //     $diterima = Tugas::where('status','=','Diterima');
+    //     $dalampengerjaan = Tugas::where('status','=','Dalam Pengerjaan');
+    //     $selesai = Tugas::where('status','=','Selesai');
+
+    //     return view('pages.tugas.status', compact('pageName','draft','diterima','dalampengerjaan','selesai'));
+    // }
+
+    public function status(Request $request)
+    {
+
+        Carbon::setLocale('id');
+        $data = $request->all();
+
+        // if($data = 'Draft'){
+        //     $draft = Tugas::Where('status', '=', 'Draft')->get();
+        // }
+
+switch($data) {
+    case ($data = 'Draft'):
+        $pageName   = "Draft";
+        $status = Tugas::Where('status', '=', 'Draft')->get();
+        break;
+    case $data == 'Diterima':
+        $status = Tugas::where('status', '=', 'Diterima')->get();
+        break;
+    case $data == 'Dalam Pengerjaan':
+        $status = Tugas::where('status', '=', 'Dalam Pengerjaan')->get();
+        break;
+    case $data == 'Selesai':
+        $status = Tugas::where('status', '=', 'Selesai')->get();
+        break;
+    default:
+    $status  = Tugas::all();
+}
+
+
+        return view('pages.tugas.status', compact('pageName','status'));
     }
 
     public function add()

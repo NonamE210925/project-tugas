@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 
 class UserController extends Controller
@@ -50,10 +51,12 @@ class UserController extends Controller
             'role.required' => 'Harap mengisi data',
         ]);
 
-        $validated ['password'] = Hash::make($validated['password']);
+
         if ($request->file('foto')) {
             $validated['foto'] = $request->file('foto')->store('uploads/foto');
         }
+
+        $validated ['password'] = Hash::make($validated['password']);
 
         $store = User::create($validated);
         // $data = $request->all();
@@ -108,12 +111,16 @@ class UserController extends Controller
         $data['foto'] = $user->foto; //ambil data dari sebelum perubahan
     }
 
+    // $hashed = $user ['password'];
        if(! $request->input('password')){
         $data ['password'] = $user->password;
+        // if(Hash::needsRehash($hashed)){
+        // }
+       }else{
+           $data ['password'] = Hash::make($data['password']);
        }
-
-       $data ['password'] = Hash::make($data['password']);
-
+    //    if($request->password('password')){
+    // }
        $update = $user->update($data);
 
        session()->flash('success', 'Data Berhasil Diupdate!.');

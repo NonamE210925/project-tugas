@@ -6,7 +6,8 @@
                 <span class="menu-title">Dashboard</span>
             </a>
         </li>
-        {{-- @if(auth()->user()->role == "Admin") --}}
+
+        @can('isAdmin')
         <li class="nav-item nav-category">Master</li>
         <li class="nav-item {{ request()->is('jenis-bencana*') ? 'active' : '' }}">
             <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false"
@@ -20,19 +21,43 @@
                     <li class="nav-item"> <a class="nav-link" href="{{ route('user') }}">Kelola User</a></li>
                 </ul>
             </div>
+            <div class="collapse {{ request()->is('tugas*') ? 'show' : '' }}" id="ui-basic">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('tugas') }}">History tugas</a></li>
+                </ul>
+            </div>
             <div class="collapse {{ request()->is('struktur*') ? 'show' : '' }}" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link" href="{{ route('struktur') }}">Struktur</a></li>
                 </ul>
             </div>
-            {{-- @if(auth()->user()->role == "Atasan") --}}
-            <div class="collapse {{ request()->is('tugas*') ? 'show' : '' }}" id="ui-basic">
+        </li>
+        @endcan
+        @can('isAtasan')
+        <li class="nav-item nav-category">Create Tugas</li>
+        <li class="nav-item {{ request()->is('jenis-bencana*') ? 'active' : '' }}">
+            <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false"
+                aria-controls="ui-basic">
+                <i class="menu-icon mdi mdi-floor-plan"></i>
+                <span class="menu-title">Create Tugas</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse {{ request()->is('struktur*') ? 'show' : '' }}" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('tugas') }}">tabel tugas</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('struktur') }}">Struktur</a></li>
                 </ul>
             </div>
-            {{-- @endif --}}
-            {{-- @endif --}}
+            <div class="collapse {{ request()->is('tugas*') ? 'show' : '' }}" id="ui-basic">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('tugas') }}">Buat Tugas</a></li>
+                </ul>
+            </div>
+            <div class="collapse {{ request()->is('tugas*') ? 'show' : '' }}" id="ui-basic">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('tugas.status','Draft') }}">Status</a></li>
+                </ul>
+            </div>
+            @endcan
         </li>
     </ul>
 </nav>
